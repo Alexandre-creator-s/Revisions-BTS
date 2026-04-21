@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Espace de révisions BTS SIO SLAM — Fiches, flashcards, check-list Jour J et mode sombre pour réviser efficacement.">
+    <title>Mes Révisions BTS SIO</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- Bouton Mode Sombre -->
+    <button id="theme-toggle" title="Changer de thème" aria-label="Basculer le mode sombre">🌙</button>
+
+    <header>
+        <h1>🎓 Mon Espace Révisions BTS</h1>
+        <p>Objectif : Diplôme en poche !</p>
+    </header>
+
+    <!-- Navigation Filtres -->
+    <div class="nav-sticky">
+        <nav id="filters">
+            <button class="filter-btn active" data-filter="all">📋 Toutes</button>
+            <button class="filter-btn" data-filter="e1">✍️ E1 — Culture générale</button>
+            <button class="filter-btn" data-filter="e2a">🇬🇧 E2-A — Anglais</button>
+            <button class="filter-btn" data-filter="e4">⚖️ E4 — CEJM</button>
+            <button class="filter-btn" data-filter="pro">💼 Math </button>
+            <button class="filter-btn" data-filter="e7">🛡️ E7 — Cybersécurité</button>
+            <button class="filter-btn" data-filter="langues">🌍 Langues</button>
+        </nav>
+    </div>
+
+    <!-- Recherche & Actions -->
+    <div class="search-section">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Rechercher une fiche (titre, contenu...)" autocomplete="off">
+            <button id="clear-search" class="clear-search" title="Effacer">✕</button>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+
+        <!-- ======================================
+             SECTION 1 : FICHES DE RÉVISION
+             ====================================== -->
+        <section class="section-block" id="section-fiches">
+            <h2 class="section-title"><span class="emoji">📚</span> Fiches de Révision</h2>
+            <p class="section-subtitle">Clique sur un filtre pour n'afficher que les fiches d'une épreuve.</p>
+
+            <div class="fiches-actions">
+                <button id="add-fiche-btn" class="add-btn">
+                    <span>➕</span> Ajouter une fiche
+                </button>
+            </div>
+
+            <div id="fiches-container">
+                <!-- Les fiches seront générées dynamiquement ici -->
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             SECTION 2 : FLASHCARDS
+             ====================================== -->
+        <section class="section-block" id="section-flashcards">
+            <h2 class="section-title"><span class="emoji">🧠</span> Flashcards — Cartes Mémoire</h2>
+            <p class="section-subtitle">Clique sur une carte pour révéler la réponse. Clique à nouveau pour la
+                retourner.</p>
+
+            <div class="flashcards-grid">
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">⚖️</span>
+                            <h3>Qu'est-ce que le RGPD ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E4 — CEJM</span>
+                            <p>Le <strong>Règlement Général sur la Protection des Données</strong> est un texte européen
+                                (2018) qui encadre la collecte et le traitement des données personnelles. Il impose le
+                                consentement, le droit à l'oubli et la portabilité des données.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">🛡️</span>
+                            <h3>Qu'est-ce qu'une injection SQL ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E7 — Cyber</span>
+                            <p>Une attaque qui insère du code SQL malveillant dans un champ de saisie pour manipuler la
+                                base de données. <strong>Parade :</strong> requêtes préparées (paramétrage).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">📊</span>
+                            <h3>Différence entre Scrum et Kanban ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E4 — CEJM</span>
+                            <p><strong>Scrum</strong> : sprints de durée fixe, rôles définis (PO, SM).
+                                <strong>Kanban</strong> : flux continu, pas de sprints, on limite le travail en cours
+                                (WIP).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">🔐</span>
+                            <h3>Hachage vs Chiffrement ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E7 — Cyber</span>
+                            <p><strong>Hachage</strong> = irréversible (SHA-256, bcrypt), sert à stocker des mots de
+                                passe. <strong>Chiffrement</strong> = réversible avec une clé (AES), sert à protéger des
+                                données en transit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">💼</span>
+                            <h3>Qu'est-ce qu'un contrat SaaS ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E4 — CEJM</span>
+                            <p><strong>Software as a Service</strong> : le client utilise un logiciel hébergé en ligne,
+                                moyennant un abonnement. Il n'achète pas de licence, le prestataire gère l'hébergement
+                                et la maintenance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">🇬🇧</span>
+                            <h3>Comment dire « cependant » en anglais ? (3 façons)</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E2-A — Anglais</span>
+                            <p><strong>However</strong> (le plus courant), <strong>Nevertheless</strong> (soutenu),
+                                <strong>Yet</strong> (plus court, en début de phrase). Ex : "However, the data
+                                suggests…"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">📝</span>
+                            <h3>Quelle est la méthode de la synthèse de documents ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E1 — Culture gé.</span>
+                            <p>1. Lire & analyser chaque document. 2. Créer un <strong>tableau de
+                                    confrontation</strong>. 3. Dégager 2-3 axes thématiques. 4. Rédiger en
+                                <strong>reformulant</strong> (pas de citation directe).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-icon">🌐</span>
+                            <h3>Qu'est-ce que le OWASP Top 10 ?</h3>
+                            <span class="flashcard-hint">👆 Clique pour retourner</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-category">E7 — Cyber</span>
+                            <p>Un classement des <strong>10 vulnérabilités web les plus critiques</strong>, publié par
+                                l'OWASP. Inclut : Injection, Broken Authentication, XSS, Security Misconfiguration, etc.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 3 : CHECK-LIST JOUR J
+             ====================================== -->
+        <section class="section-block" id="section-checklist">
+            <h2 class="section-title"><span class="emoji">✅</span> Check-list Jour J</h2>
+            <p class="section-subtitle">Coche chaque élément au fur et à mesure pour ne rien oublier le jour de l'examen
+                !</p>
+
+            <div class="checklist-container">
+                <div class="checklist-progress">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0 / 9</span>
+                </div>
+
+                <ul class="checklist-items" id="checklist">
+                    <li class="checklist-item" data-item="convocation">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">📄</span>
+                        <span class="checklist-label">Convocation imprimée</span>
+                    </li>
+                    <li class="checklist-item" data-item="identite">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">🪪</span>
+                        <span class="checklist-label">Pièce d'identité (CNI ou passeport)</span>
+                    </li>
+                    <li class="checklist-item" data-item="stylos">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">🖊️</span>
+                        <span class="checklist-label">Stylos (noir + bleu + rouge + correcteur)</span>
+                    </li>
+                    <li class="checklist-item" data-item="calculatrice">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">🔢</span>
+                        <span class="checklist-label">Calculatrice (avec piles neuves !)</span>
+                    </li>
+                    <li class="checklist-item" data-item="montre">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">⌚</span>
+                        <span class="checklist-label">Montre (téléphone interdit !)</span>
+                    </li>
+                    <li class="checklist-item" data-item="eau">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">💧</span>
+                        <span class="checklist-label">Bouteille d'eau</span>
+                    </li>
+                    <li class="checklist-item" data-item="snack">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">🍫</span>
+                        <span class="checklist-label">Encas / barre de céréales</span>
+                    </li>
+                    <li class="checklist-item" data-item="copies">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">📋</span>
+                        <span class="checklist-label">Copies doubles + feuille de brouillon</span>
+                    </li>
+                    <li class="checklist-item" data-item="reveil">
+                        <div class="checklist-checkbox"></div>
+                        <span class="checklist-emoji">⏰</span>
+                        <span class="checklist-label">Réveil programmé (mettre 2 alarmes !)</span>
+                    </li>
+                </ul>
+
+                <button class="checklist-reset-btn" id="checklist-reset">🔄 Tout décocher</button>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 4 : SIMULATEUR DE NOTES
+             ====================================== -->
+        <section class="section-block" id="section-simulateur">
+            <h2 class="section-title"><span class="emoji">🧮</span> Simulateur de Moyenne BTS SIO SLAM</h2>
+            <p class="section-subtitle">Entre tes notes pour calculer ta moyenne pondérée avec les coefficients officiels.</p>
+
+            <div class="simulateur-container">
+                <div class="simulateur-grid">
+                    <div class="note-input-group">
+                        <label for="note-e1">
+                            <span class="note-label-code">E1</span>
+                            <span class="note-label-name">Culture générale et expression</span>
+                            <span class="note-label-coeff">coeff. 3</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e1" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="3">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e2">
+                            <span class="note-label-code">E2</span>
+                            <span class="note-label-name">Anglais (écrit + oral)</span>
+                            <span class="note-label-coeff">coeff. 2</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e2" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="2">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e3">
+                            <span class="note-label-code">E3</span>
+                            <span class="note-label-name">Mathématiques pour l'informatique</span>
+                            <span class="note-label-coeff">coeff. 3</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e3" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="3">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e4">
+                            <span class="note-label-code">E4</span>
+                            <span class="note-label-name">CEJM pour l'informatique</span>
+                            <span class="note-label-coeff">coeff. 3</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e4" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="3">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e5">
+                            <span class="note-label-code">E5</span>
+                            <span class="note-label-name">Conception & développement (SLAM)</span>
+                            <span class="note-label-coeff">coeff. 4</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e5" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="4">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e6">
+                            <span class="note-label-code">E6</span>
+                            <span class="note-label-name">Parcours de professionnalisation</span>
+                            <span class="note-label-coeff">coeff. 3</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e6" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="3">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+
+                    <div class="note-input-group">
+                        <label for="note-e7">
+                            <span class="note-label-code">E7</span>
+                            <span class="note-label-name">Cybersécurité des services info.</span>
+                            <span class="note-label-coeff">coeff. 4</span>
+                        </label>
+                        <div class="note-input-wrapper">
+                            <input type="number" id="note-e7" min="0" max="20" step="0.5" placeholder="— / 20" data-coeff="4">
+                            <span class="note-sur-20">/ 20</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulateur-result" id="simulateur-result">
+                    <div class="result-moyenne">
+                        <span class="result-label">Ta moyenne générale</span>
+                        <span class="result-note" id="result-note">— / 20</span>
+                    </div>
+                    <div class="result-bar-track">
+                        <div class="result-bar-fill" id="result-bar-fill"></div>
+                        <div class="result-bar-seuil" style="left: 50%;" title="Seuil d'admission : 10/20"></div>
+                        <div class="result-bar-seuil mention-ab" style="left: 60%;" title="Mention AB : 12/20"></div>
+                        <div class="result-bar-seuil mention-b" style="left: 70%;" title="Mention B : 14/20"></div>
+                        <div class="result-bar-seuil mention-tb" style="left: 80%;" title="Mention TB : 16/20"></div>
+                    </div>
+                    <div class="result-legend">
+                        <span class="legend-item"><span class="legend-dot dot-red"></span>Ajourné</span>
+                        <span class="legend-item"><span class="legend-dot dot-orange"></span>Admis</span>
+                        <span class="legend-item"><span class="legend-dot dot-yellow"></span>AB</span>
+                        <span class="legend-item"><span class="legend-dot dot-green"></span>Bien</span>
+                        <span class="legend-item"><span class="legend-dot dot-emerald"></span>TB</span>
+                    </div>
+                    <p class="result-verdict" id="result-verdict"></p>
+                </div>
+
+                <button class="simulateur-reset-btn" id="simulateur-reset">🗑️ Réinitialiser les notes</button>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 5 : OUTILS PRATIQUES (SQL & DOCS)
+             ====================================== -->
+        <section class="section-block" id="section-outils">
+            <h2 class="section-title"><span class="emoji">🛠️</span> Outils Pratiques — SQL & Documents</h2>
+            <p class="section-subtitle">Générateur de requêtes SQL pour l'épreuve E4 et dépôt de fichiers PDF.</p>
+
+            <div class="outils-container">
+                <!-- Générateur SQL -->
+                <div class="outil-box sql-gen">
+                    <h3>🛠️ Générateur SQL</h3>
+                    <div class="sql-inputs">
+                        <div class="sql-input-group">
+                            <label>SELECT</label>
+                            <input type="text" id="sql-select" placeholder="Colonnes (ex: nom, prenom)">
+                        </div>
+                        <div class="sql-input-group">
+                            <label>FROM</label>
+                            <input type="text" id="sql-from" placeholder="Table (ex: clients)">
+                        </div>
+                        <div class="sql-input-group">
+                            <label>WHERE</label>
+                            <input type="text" id="sql-where" placeholder="Condition (ex: ville = 'Paris')">
+                        </div>
+                        <div class="sql-input-group">
+                            <label>ORDER BY</label>
+                            <input type="text" id="sql-order" placeholder="Tri (ex: nom ASC)">
+                        </div>
+                    </div>
+                    <div class="sql-preview">
+                        <div class="preview-header">
+                            <span>Requête :</span>
+                            <button id="copy-sql" class="copy-btn">Copier</button>
+                        </div>
+                        <pre><code id="generated-sql">SELECT * FROM table;</code></pre>
+                    </div>
+                </div>
+
+                <!-- Zone PDF -->
+                <div class="outil-box pdf-depot">
+                    <h3>📁 Dépôt de Fichiers PDF</h3>
+                    <div id="drop-zone" class="drop-zone">
+                        <div class="drop-icon">📤</div>
+                        <p>Glisse tes PDF ici ou clique pour choisir</p>
+                        <input type="file" id="pdf-upload" accept=".pdf" multiple hidden>
+                    </div>
+                    <div id="pdf-list" class="pdf-list">
+                        <!-- Liste des fichiers -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 6 : BAC À SABLE SQL (MOCK SQL)
+             ====================================== -->
+        <section class="section-block" id="section-sql-sandbox">
+            <h2 class="section-title"><span class="emoji">🎮</span> Bac à Sable SQL — Relève le défi !</h2>
+            <p class="section-subtitle">Manipule la table virtuelle et écris la bonne requête pour gagner.</p>
+
+            <div class="sandbox-container">
+                <!-- Table Source -->
+                <div class="sandbox-card source-table-card">
+                    <h3>📊 Table : <code>Etudiants</code></h3>
+                    <div class="table-responsive">
+                        <table class="mock-table">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>nom</th>
+                                    <th>prenom</th>
+                                    <th>moyenne</th>
+                                    <th>ville</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sandbox-source-body">
+                                <!-- Données injectées par JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interface de Défi -->
+                <div class="sandbox-card challenge-card">
+                    <div class="challenge-header">
+                        <span class="level-badge" id="sql-level">Défi 1</span>
+                        <h3 id="sql-challenge-text">Affiche tous les étudiants de la table.</h3>
+                    </div>
+                    
+                    <div class="sql-editor-container">
+                        <textarea id="sql-sandbox-input" spellcheck="false" placeholder="Tape ton code SQL ici..."></textarea>
+                        <div class="editor-actions">
+                            <button id="sql-sandbox-run" class="run-btn">Tester la requête</button>
+                            <button id="sql-sandbox-next" class="next-btn" disabled>Défi suivant ➤</button>
+                        </div>
+                    </div>
+
+                    <div id="sql-sandbox-feedback" class="sandbox-feedback">
+                        <!-- Message de succès ou d'erreur -->
+                    </div>
+
+                    <div class="sandbox-result-area" id="sandbox-result-area">
+                        <!-- Aperçu du résultat de la requête -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 7 : GÉNÉRATEUR PESTEL
+             ====================================== -->
+        <section class="section-block" id="section-pestel">
+            <h2 class="section-title"><span class="emoji">🎡</span> Générateur PESTEL — Analyse Stratégique</h2>
+            <p class="section-subtitle">Analyse l'environnement d'une entreprise (ESN / Éditeur) en classant les événements.</p>
+
+            <div class="pestel-container">
+                <div class="pestel-header">
+                    <div class="company-choice">
+                        <label for="pestel-company">Entreprise analysée :</label>
+                        <select id="pestel-company">
+                            <option value="esn">🏢 ESN (Entreprise de Services du Numérique)</option>
+                            <option value="editeur">💻 Éditeur de Logiciels SaaS</option>
+                            <option value="startup">🚀 Startup GreenTech</option>
+                        </select>
+                    </div>
+                    <div class="pestel-stats">
+                        <span id="pestel-counter">0 / 12 événements classés</span>
+                        <button id="pestel-reset" class="reset-link">Réinitialiser</button>
+                    </div>
+                </div>
+
+                <div class="pestel-game-layout">
+                    <!-- Zone des événements à classer -->
+                    <div class="pestel-pool">
+                        <h3>📥 Événements à classer</h3>
+                        <p class="pool-hint">Glisse un événement dans la bonne catégorie ci-dessous.</p>
+                        <div id="pestel-events-pool" class="events-pool">
+                            <!-- Injecté par JS -->
+                        </div>
+                    </div>
+
+                    <!-- Grille PESTEL -->
+                    <div class="pestel-grid">
+                        <div class="pestel-column" data-category="P">
+                            <div class="column-header">
+                                <span class="col-icon">🏛️</span>
+                                <h4>Politique</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-P"></div>
+                        </div>
+                        <div class="pestel-column" data-category="E">
+                            <div class="column-header">
+                                <span class="col-icon">💰</span>
+                                <h4>Économique</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-E"></div>
+                        </div>
+                        <div class="pestel-column" data-category="S">
+                            <div class="column-header">
+                                <span class="col-icon">👥</span>
+                                <h4>Sociologique</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-S"></div>
+                        </div>
+                        <div class="pestel-column" data-category="T">
+                            <div class="column-header">
+                                <span class="col-icon">⚡</span>
+                                <h4>Technologique</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-T"></div>
+                        </div>
+                        <div class="pestel-column" data-category="ENV">
+                            <div class="column-header">
+                                <span class="col-icon">🌱</span>
+                                <h4>Écologique</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-ENV"></div>
+                        </div>
+                        <div class="pestel-column" data-category="L">
+                            <div class="column-header">
+                                <span class="col-icon">⚖️</span>
+                                <h4>Légal</h4>
+                            </div>
+                            <div class="drop-zone-pestel" id="pestel-drop-L"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analyse Radar (Révélée à la fin) -->
+                <div id="pestel-analysis" class="pestel-analysis hidden">
+                    <div class="analysis-grid">
+                        <div class="analysis-chart">
+                            <canvas id="pestel-radar-chart"></canvas>
+                        </div>
+                        <div class="analysis-text">
+                            <h3>🔍 Conclusion de l'Analyse</h3>
+                            <div id="pestel-verdict-text">
+                                <!-- Injecté par JS -->
+                            </div>
+                            <button id="show-pestel-details" class="btn-secondary">Voir le détail des impacts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 8 : SIMULATEUR DE STRATÉGIE
+             ====================================== -->
+        <section class="section-block" id="section-strategie">
+            <h2 class="section-title"><span class="emoji">♟️</span> Simulateur de Stratégie Globale</h2>
+            <p class="section-subtitle">Incarne un dirigeant et fais les bons choix stratégiques pour ta startup.</p>
+
+            <div class="strategie-container">
+                <div id="strat-scenario-card" class="strat-scenario-card">
+                    <div class="scenario-badge">Scénario Actuel</div>
+                    <h3 id="strat-market-title">Marché du Cloud Computing</h3>
+                    <p id="strat-market-desc">Ta startup "CloudNova" est un petit acteur sur le marché du stockage. Des géants dominent déjà, mais la demande explose.</p>
+                    <button id="strat-new-scenario" class="btn-refresh">🔄 Autre scénario</button>
+                </div>
+
+                <div class="strat-choices-grid">
+                    <div class="strat-card" data-choice="specialisation">
+                        <div class="strat-card-icon">🎯</div>
+                        <h4>Spécialisation</h4>
+                        <p>Se concentrer sur un seul segment de marché.</p>
+                    </div>
+                    <div class="strat-card" data-choice="diversification">
+                        <div class="strat-card-icon">🚀</div>
+                        <h4>Diversification</h4>
+                        <p>Lancer de nouveaux produits sur de nouveaux marchés.</p>
+                    </div>
+                    <div class="strat-card" data-choice="integration">
+                        <div class="strat-card-icon">🔗</div>
+                        <h4>Intégration</h4>
+                        <p>Prendre le contrôle d'un maillon de la chaîne.</p>
+                    </div>
+                </div>
+
+                <div id="strat-feedback" class="strat-feedback hidden">
+                    <div class="feedback-content">
+                        <h3 id="strat-choice-name">Choix : Spécialisation</h3>
+                        <p id="strat-choice-desc">"Je ne fais que de la sécurité Cloud."</p>
+                        
+                        <div class="feedback-grid">
+                            <div class="feedback-box pros">
+                                <h5>✅ Avantages</h5>
+                                <ul id="strat-pros-list">
+                                    <!-- Injecté par JS -->
+                                </ul>
+                            </div>
+                            <div class="feedback-box cons">
+                                <h5>⚠️ Risques</h5>
+                                <ul id="strat-cons-list">
+                                    <!-- Injecté par JS -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================
+             SECTION 9 : ASSISTANT IA (GEMINI)
+             ====================================== -->
+        <section class="section-block" id="section-ia">
+            <h2 class="section-title"><span class="emoji">🤖</span> Assistant IA — Explique-moi ce concept</h2>
+            <p class="section-subtitle">Pose une question sur tes cours et l'IA te donne une explication simplifiée. Propulsé par Google Gemini.</p>
+
+            <div class="ia-container">
+                <div class="ia-api-key-section" id="ia-api-setup">
+                    <div class="ia-key-info">
+                        <span class="ia-key-icon">🔑</span>
+                        <div>
+                            <strong>Clé API Gemini requise</strong>
+                            <p>Obtiens ta clé gratuite sur <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a></p>
+                        </div>
+                    </div>
+                    <div class="ia-key-input-row">
+                        <input type="password" id="gemini-api-key" placeholder="Colle ta clé API ici…" autocomplete="off">
+                        <button id="save-api-key" class="ia-save-key-btn">Enregistrer</button>
+                    </div>
+                </div>
+
+                <div class="ia-chat-area" id="ia-chat-area">
+                    <div class="ia-messages" id="ia-messages">
+                        <div class="ia-message ia-bot">
+                            <div class="ia-avatar">🤖</div>
+                            <div class="ia-bubble">
+                                <p>Salut ! 👋 Je suis ton assistant de révisions. Pose-moi une question sur tes cours (CEJM, Cybersécurité, Anglais, Culture Gé…) et je t'explique simplement !</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ia-input-row">
+                        <input type="text" id="ia-question" placeholder="Ex : Explique-moi le RGPD en 3 points simples…" autocomplete="off">
+                        <button id="ia-send" class="ia-send-btn" title="Envoyer">
+                            <span>➤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ======================================
+         MODAL : Détail de la fiche
+         ====================================== -->
+    <!-- ======================================
+          MODAL : Formulaire Fiche (Ajout/Modif)
+          ====================================== -->
+    <div class="modal-overlay" id="form-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="form-modal-close" aria-label="Fermer">✕</button>
+            <h2 class="modal-title" id="form-modal-title">📝 Nouvelle Fiche</h2>
+            
+            <form id="fiche-form" class="modal-form">
+                <input type="hidden" id="form-fiche-id">
+                
+                <div class="form-group">
+                    <label for="form-title">Titre de la fiche</label>
+                    <input type="text" id="form-title" placeholder="Ex: Les injections SQL" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-subject">Épreuve (Filtre)</label>
+                        <select id="form-subject" required>
+                            <option value="e1">E1 — Culture générale</option>
+                            <option value="e2a">E2-A — Anglais</option>
+                            <option value="e4">E4 — CEJM</option>
+                            <option value="pro">Math / Matière Pro</option>
+                            <option value="e7">E7 — Cybersécurité</option>
+                            <option value="langues">Langues</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-badge">Texte du Badge</label>
+                        <input type="text" id="form-badge" placeholder="Ex: Cybersécurité (SLAM)" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-epreuve-full">Code/Nom complet de l'épreuve</label>
+                    <input type="text" id="form-epreuve-full" placeholder="Ex: E7 — Cybersécurité des services informatiques" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-description">Courte description (carte)</label>
+                    <textarea id="form-description" placeholder="Une phrase résumant la fiche..." rows="2" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-content">Contenu détaillé du cours (HTML/Texte)</label>
+                    <textarea id="form-content" placeholder="Développe ici le contenu complet du cours..." rows="10" required></textarea>
+                </div>
+
+                <div class="form-footer">
+                    <button type="button" class="btn-secondary" id="form-cancel">Annuler</button>
+                    <button type="submit" class="btn-primary" id="form-submit">Enregistrer la fiche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======================================
+          MODAL : Détail de la fiche (Lecture)
+          ====================================== -->
+    <div class="modal-overlay" id="fiche-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
+            <div class="modal-header">
+                <span class="modal-badge" id="modal-badge"></span>
+                <span class="modal-epreuve" id="modal-epreuve"></span>
+                <button id="modal-edit-btn" class="modal-edit-btn" title="Modifier cette fiche">✏️ Modifier</button>
+                <button id="modal-delete-btn" class="modal-delete-btn" title="Supprimer cette fiche">🗑️</button>
+            </div>
+            <h2 class="modal-title" id="modal-title"></h2>
+            
+            <div id="modal-course-content" class="modal-course-content">
+                <!-- Le contenu détaillé sera injecté ici -->
+            </div>
+
+            <div class="modal-separator"></div>
+
+            <div class="modal-notes-section">
+                <h3 class="modal-notes-title">
+                    <span>📝</span> Mes notes personnelles
+                </h3>
+                <p class="modal-notes-hint">Écris ici tes propres notes, résumés, formules, astuces… Tout est sauvegardé automatiquement !</p>
+                <textarea id="modal-notes" class="modal-notes-textarea" placeholder="Commence à écrire tes notes ici..."></textarea>
+                <div class="modal-notes-footer">
+                    <span class="modal-save-status" id="modal-save-status"></span>
+                    <span class="modal-char-count" id="modal-char-count">0 caractères</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Conteneur Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
